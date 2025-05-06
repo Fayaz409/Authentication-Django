@@ -1,0 +1,15 @@
+{% extends 'authapp/base.html'%}
+
+{%block title%} {%endblock%}
+
+{%block content%}
+<center>
+    <h2>Sign Up</h2>
+</center>
+<form method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary">SignUp</button>
+</form>
+
+{%endblock%}
