@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm, UserCreationForm
+from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash,login,authenticate
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -45,3 +45,8 @@ def change_pasword(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request,'authapp/change_password.html',{'form':form})
+
+
+def change_profile(request):
+    form = UserChangeForm(instance=request.user)
+    return render(request,'authapp/change_profile.html',{'form':form})
