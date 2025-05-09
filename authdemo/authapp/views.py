@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,Password
 from django.contrib.auth import update_session_auth_hash,login,authenticate
 # Create your views here.
 from django.contrib.auth.decorators import login_required
-from .forms import SignUpForm
+from .forms import SignUpForm,ProfileChangeForm
 
 
 @login_required
@@ -46,7 +46,13 @@ def change_pasword(request):
         form = PasswordChangeForm(request.user)
     return render(request,'authapp/change_password.html',{'form':form})
 
-
+@login_required
 def change_profile(request):
-    form = UserChangeForm(instance=request.user)
+    if request.method == 'POST':
+        form = ProfileChangeForm(request.POST,instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ProfileChangeForm(instance=request.user)
     return render(request,'authapp/change_profile.html',{'form':form})
