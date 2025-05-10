@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {%block title%}
-        Home
-        {%endblock%}
-    </title>
-</head>
-<body>
+{%extends 'authapp/base.html'%}
+
+{%block title%}
+Home
+{%endblock%}
+
+{%block content%}
     <div class="text-center">
 
         <h1>
@@ -17,8 +12,12 @@
         </h1>
     </div>
     <!-- <p><a class="nav-link" href="{%url 'signup'%}">Sign Up</a></p> -->
+  <div class="text-center">
 
-    <p ><a class="nav-link" href="{%url 'change-password'%}">Change Password</a></p>
-    <p><a class="nav-link" href="{%url 'change-profile'%}">Change Profile</a></p>
-</body>
-</html>
+      <p ><a class="nav-link" href="{%url 'change-password'%}">Change Password</a></p>
+      <p><a class="nav-link" href="{%url 'change-profile'%}">Change Profile</a></p>
+      <p><a href="{%url 'delete-account'%}">
+          <button class="btn btn-danger">Delete Account</button>
+      </a></p>
+  </div>
+{%endblock%}

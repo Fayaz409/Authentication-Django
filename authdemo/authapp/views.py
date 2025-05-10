@@ -56,3 +56,9 @@ def change_profile(request):
     else:
         form = ProfileChangeForm(instance=request.user)
     return render(request,'authapp/change_profile.html',{'form':form})
+
+def delete_account(request):
+    if request.method=='POST':
+        request.user.delete()
+        return redirect('login')
+    return render(request,'authapp/delete_account.html')

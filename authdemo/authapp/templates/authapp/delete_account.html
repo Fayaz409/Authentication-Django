@@ -1,0 +1,17 @@
+{%extends 'authapp/base.html'%}
+{%block title%}
+account delete
+{%endblock%}
+
+{%block content%}
+<form class="text-center"  method="post">
+    <p>Are You Sure You want to delete this account</p>
+    {%csrf_token%}
+    <a href="{url 'delete-account'%%}">
+
+        <button class="btn btn-danger">
+            Delete
+        </button>
+    </a>
+</form>
+{%endblock%}
