@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,PasswordChangeForm, UserCreationForm
-from django.contrib.auth import update_session_auth_hash,login,authenticate
+from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm,ProfileChangeForm
@@ -57,8 +57,14 @@ def change_profile(request):
         form = ProfileChangeForm(instance=request.user)
     return render(request,'authapp/change_profile.html',{'form':form})
 
+@login_required
 def delete_account(request):
     if request.method=='POST':
         request.user.delete()
         return redirect('login')
     return render(request,'authapp/delete_account.html')
+
+@login_required
+def signout(request):
+    logout(request)
+    return redirect('login')
