@@ -1,4 +1,5 @@
 from django import forms
+from .models import CustomUserModel
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm,UserCreationForm,UserChangeForm
 
@@ -8,8 +9,8 @@ class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30,required=True)
     last_name = forms.CharField(max_length=30,required=True)
     class Meta:
-        model = User
-        fields = ['username','first_name','last_name','email']
+        model = CustomUserModel
+        fields = ['username','first_name','last_name','country','address','email']
 
 
 class ProfileChangeForm(UserChangeForm):
@@ -18,6 +19,6 @@ class ProfileChangeForm(UserChangeForm):
     first_name = forms.CharField(max_length=30,required=True)
     last_name = forms.CharField(max_length=30,required=True)
     class Meta:
-        model = User
-        fields = ['username','first_name','last_name','email']
+        model = CustomUserModel
+        fields = ['username','first_name','last_name','country','address','email']
 
