@@ -5,6 +5,19 @@ Home
 {%endblock%}
 
 {%block content%}
+
+{%if user.is_superuser%}
+<div class="text-center">
+
+  <h3>Super User Actions:</h3>
+  <h6>Hey! You are logged in as a Super User!</h6>
+   
+   <h5>Hello! Welcome Home. {{user.username}}</h5>
+    <p><a href="{%url 'signout'%}">
+      <button class="btn btn-primary">Logout</button>
+    </a></p>
+</div>
+  {%else%}
   <p><a href="{%url 'signout'%}">
     <button class="btn btn-primary">Logout</button>
   </a></p>
@@ -23,4 +36,5 @@ Home
           <button class="btn btn-danger">Delete Account</button>
       </a></p>
   </div>
+  {%endif%}
 {%endblock%}
