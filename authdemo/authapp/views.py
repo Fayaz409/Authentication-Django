@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
 # Create your views here.
+from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm,ProfileChangeForm
 
@@ -16,6 +17,10 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            # Add user to Customers Group
+            customers_group,created = Group.objects.get_or_create(name='Customers')
+            user.groups.add(customers_group)
+            
             login(request,user)
             return redirect('home')
     return render(request,'authapp/signup.html',{'form':form})
