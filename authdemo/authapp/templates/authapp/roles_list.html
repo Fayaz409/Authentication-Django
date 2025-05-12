@@ -12,11 +12,14 @@ Super User Roles
         <li>
             {{role.id}} -- {{role.name}}
 
-            <a href="{%url 'update-role' role.name%}">
-
+            <a href="{%url 'update-role' role.name%}"> 
                 
-                 update role
+                 Update 
+            </a> |
+            <a href="{%url 'delete-group' role.id%}">
+                Delete
             </a>
+
         </li>
         {%endfor%}
     </ul>

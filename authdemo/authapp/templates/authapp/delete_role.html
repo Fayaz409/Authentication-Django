@@ -1,0 +1,20 @@
+{%extends 'authapp/base.html'%}
+{% block title %}
+delete role
+{%endblock%}
+
+{%block content%}
+
+<div class="text-center">
+    <h1>Are You Sure You want to Delete This Role</h1>
+    <h3>{{role.name}}</h3>
+    <form action="" method="post">
+        {%csrf_token%}
+        <a href="{%url 'delete-group' role.id%}">
+            <button class="btn btn-danger">
+                Delete
+            </button>
+        </a>
+    </form>
+</div>
+{%endblock%}

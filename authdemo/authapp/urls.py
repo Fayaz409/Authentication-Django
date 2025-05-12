@@ -11,4 +11,5 @@ urlpatterns =[
    path('roles-list/',views.roles_list,name='roles-list'),
    path('create-role/',views.create_role,name='create-role'),
    path('update-role/<str:name>',views.edit_role,name='update-role'),
+   path('delete-group/<int:role_id>',views.delete_role,name='delete-group'),
 ]

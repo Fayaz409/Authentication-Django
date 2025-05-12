@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
 # Create your views here.
@@ -109,3 +109,17 @@ def edit_role(request,name):
         form = RoleForm(instance=role_name)
     return render(request,'authapp/update_role.html',{'form':form})
 
+@login_required
+@user_passes_test(is_superuser)
+def delete_role(request,role_id):
+    role = Group.objects.get(id=role_id)
+
+    if request.method == 'POST':
+        groupUsers = Group.objects.filter(id=role_id).count()
+        if(groupUsers == 0):
+            role.delete()
+            return redirect('roles-list')
+        else:
+            return HttpResponse('This Role is Not Empty. So, It Can Not be Deleted')
+
+    return render(request,'authapp/delete_role.html',{'role':role})
