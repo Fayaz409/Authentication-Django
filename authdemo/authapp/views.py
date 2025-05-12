@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
 # Create your views here.
+
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required,user_passes_test
-from .forms import SignUpForm,ProfileChangeForm
+from .forms import SignUpForm,ProfileChangeForm,RoleForm
 
 
 @login_required
@@ -82,4 +83,16 @@ def is_superuser(user):
 def roles_list(request):
     roles = Group.objects.all()
     return render(request,'authapp/roles_list.html',{'roles':roles})
-    
+
+@login_required
+@user_passes_test(is_superuser)
+def create_role(request):
+    if request.method == 'POST':
+        form = RoleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('roles-list')
+    else:
+        form = RoleForm()
+    return render(request,'authapp/create_role.html',{'form':form})
+

@@ -1,6 +1,7 @@
 from django import forms
 # from .models import CustomUserModel
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserChangeForm,UserCreationForm,UserChangeForm
 
 class SignUpForm(UserCreationForm):
@@ -22,3 +23,7 @@ class ProfileChangeForm(UserChangeForm):
         model = User
         fields = ['username','first_name','last_name','email']
 
+class RoleForm(forms.ModelForm):
+    class Meta:
+        model = Group 
+        fields = ['name']
