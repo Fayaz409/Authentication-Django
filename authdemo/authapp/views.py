@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,Password
 from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
 # Create your views here.
 from django.contrib.auth.models import Group
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from .forms import SignUpForm,ProfileChangeForm
 
 
@@ -20,7 +20,7 @@ def signup(request):
             # Add user to Customers Group
             customers_group,created = Group.objects.get_or_create(name='Customers')
             user.groups.add(customers_group)
-            
+
             login(request,user)
             return redirect('home')
     return render(request,'authapp/signup.html',{'form':form})
@@ -73,3 +73,13 @@ def delete_account(request):
 def signout(request):
     logout(request)
     return redirect('login')
+
+def is_superuser(user):
+    return user.is_superuser
+
+@login_required
+@user_passes_test(is_superuser)
+def roles_list(request):
+    roles = Group.objects.all()
+    return render(request,'authapp/roles_list.html',{'roles':roles})
+    

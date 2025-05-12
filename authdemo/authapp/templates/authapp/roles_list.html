@@ -1,0 +1,18 @@
+{%extends 'authapp/base.html'%}
+{%block title%}
+Super User Roles
+{%endblock%}
+
+{%block content%}
+<div class="text-center">
+
+    <h2>Roles List</h2>
+    <ul>
+        {%for role in roles%}
+        <li>
+            {{role.id}} -- {{role.name}}
+        </li>
+        {%endfor%}
+    </ul>
+</div>
+{%endblock%}
