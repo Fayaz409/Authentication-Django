@@ -96,3 +96,16 @@ def create_role(request):
         form = RoleForm()
     return render(request,'authapp/create_role.html',{'form':form})
 
+@login_required
+@user_passes_test(is_superuser)
+def edit_role(request,name):
+    role_name = Group.objects.get(name=name)
+    if request.method == 'POST':
+        form = RoleForm(request.POST,instance=role_name)
+        if form.is_valid():
+            form.save()
+            return redirect('roles-list')
+    else:
+        form = RoleForm(instance=role_name)
+    return render(request,'authapp/update_role.html',{'form':form})
+

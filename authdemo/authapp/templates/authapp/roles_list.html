@@ -11,10 +11,16 @@ Super User Roles
         {%for role in roles%}
         <li>
             {{role.id}} -- {{role.name}}
+
+            <a href="{%url 'update-role' role.name%}">
+
+                
+                 update role
+            </a>
         </li>
         {%endfor%}
     </ul>
-    
+
     <a href="{%url 'create-role'%}">Create Role</a>
 </div>
 {%endblock%}

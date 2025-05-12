@@ -1,0 +1,18 @@
+{%extends 'authapp/base.html'%}
+{%block title%}
+update role
+{%endblock%}
+
+{%block content%}
+<div class="text-center">
+
+    <h2>Update Role</h2>
+
+      <form method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+      <a href="{%url 'roles-list'%}">Back to roles</a>
+</div>
+{%endblock%}

@@ -10,4 +10,5 @@ urlpatterns =[
    path('signout/',views.signout,name='signout'),
    path('roles-list/',views.roles_list,name='roles-list'),
    path('create-role/',views.create_role,name='create-role'),
+   path('update-role/<str:name>',views.edit_role,name='update-role'),
 ]
