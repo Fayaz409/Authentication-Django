@@ -1,11 +1,10 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
-# Create your views here.
 
 from django.contrib.auth.models import Group,User
 from django.contrib.auth.decorators import login_required,user_passes_test
-from .forms import SignUpForm,ProfileChangeForm,RoleForm
+from .forms import SignUpForm,ProfileChangeForm,RoleForm,CreateStaffEmployeeForm
 
 
 @login_required
@@ -130,3 +129,19 @@ def staff_list(request):
     staff_members = User.objects.filter(is_staff=True)
     return render(request,'authapp/staff_list.html',{'staff_members':staff_members})
 
+@login_required
+@user_passes_test(is_superuser)
+def create_staff_employee(request):
+    if request.method == 'POST':
+        form  = CreateStaffEmployeeForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_staff = True
+            user.save()
+            role_name = form.cleaned_data.get('role')
+            staff_group,created = Group.objects.get_or_create(name=role_name)
+            user.groups.add(staff_group)
+            return redirect('staff-list')
+    else:
+        form = CreateStaffEmployeeForm()
+    return render(request,'authapp/create_staff_employee.html',{'form':form})

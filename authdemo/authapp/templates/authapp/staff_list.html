@@ -9,7 +9,9 @@ staff list
     <ul>
         {%for staff_member in staff_members%}
         <li>
-            {{staff_member.first_name}} -- {{staff_member.last_name}} -- {{staff_member.username}}
+          <strong>Name:</strong> {{staff_member.first_name}} {{staff_member.last_name}}
+          <strong>Username:</strong> {{staff_member.username}} 
+          <strong>Email:</strong> {{staff_member.email}}
         </li>
         {%endfor%}
     </ul>

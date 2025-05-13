@@ -27,3 +27,10 @@ class RoleForm(forms.ModelForm):
     class Meta:
         model = Group 
         fields = ['name']
+
+class CreateStaffEmployeeForm(UserCreationForm):
+    role = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
+    class Meta:
+        model= User
+        fields = ['username','email','first_name','last_name']
+
