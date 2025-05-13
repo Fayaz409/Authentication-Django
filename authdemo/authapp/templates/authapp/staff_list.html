@@ -12,6 +12,9 @@ staff list
           <strong>Name:</strong> {{staff_member.first_name}} {{staff_member.last_name}}
           <strong>Username:</strong> {{staff_member.username}} 
           <strong>Email:</strong> {{staff_member.email}}
+         <a href="{%url 'edit-staff-employee' staff_member.id%}">
+            Edit Staff
+         </a>|
         </li>
         {%endfor%}
     </ul>

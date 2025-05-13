@@ -34,3 +34,11 @@ class CreateStaffEmployeeForm(UserCreationForm):
         model= User
         fields = ['username','email','first_name','last_name']
 
+
+class EditEmployeeForm(UserChangeForm):
+    role = forms.ModelChoiceField(queryset=Group.objects.all(),required=False)
+    password = None
+
+    class Meta:
+        model = User
+        fields = ['email','first_name','last_name']

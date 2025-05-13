@@ -1,0 +1,25 @@
+{%extends 'authapp/base.html'%}
+
+{%block title%}
+Edit Staff Employee 
+{%endblock%}
+
+{%block content%}
+<div class="text-center">
+
+    <form action="" method="post">
+    
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">
+            Change Staff Employee
+        </button>
+    </form>
+    <a href="{%url 'staff-list'%}">Back To All Staff</a>
+</div>
+<script>
+   $(document).ready(function(){
+    $('#id_role').val('{{ staff_group_id }}');
+  });
+</script>
+{%endblock%}

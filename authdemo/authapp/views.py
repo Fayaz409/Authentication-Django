@@ -1,10 +1,10 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import get_object_or_404, render,redirect,HttpResponse
 from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,PasswordChangeForm, UserCreationForm
 from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
-
+from django.contrib import messages
 from django.contrib.auth.models import Group,User
 from django.contrib.auth.decorators import login_required,user_passes_test
-from .forms import SignUpForm,ProfileChangeForm,RoleForm,CreateStaffEmployeeForm
+from .forms import EditEmployeeForm,SignUpForm,ProfileChangeForm,RoleForm,CreateStaffEmployeeForm
 
 
 @login_required
@@ -145,3 +145,30 @@ def create_staff_employee(request):
     else:
         form = CreateStaffEmployeeForm()
     return render(request,'authapp/create_staff_employee.html',{'form':form})
+
+@login_required
+@user_passes_test(is_superuser)
+def edit_staff_employee(request,user_id):
+    staff_member = get_object_or_404(User, pk=user_id)
+    # Safely grab the first group, or None
+    if request.method == 'POST':
+        form = EditEmployeeForm(request.POST,instance=staff_member)
+        if form.is_valid():
+            user = form.save()
+            role_name = form.cleaned_data.get('role')
+            staff_group,created = Group.objects.get_or_create(name = role_name)
+            user.groups.clear()
+            user.groups.add(staff_group)
+            return redirect('staff-list')
+    else:
+        staff_group = staff_member.groups.first()
+
+        # Optionally: handle no-group scenario
+        if staff_group is None:
+            messages.warning(request, "This user has no staff group assigned.")
+            # e.g. assign a default group, or redirect back
+            # return redirect('staff-list')
+
+        form = EditEmployeeForm(instance=staff_member)
+
+    return render(request,'authapp/edit_staff_employee.html',{'form':form,'staff_member':staff_member,'staff_group':staff_group,'staff_group_id': staff_group.id if staff_group else None})
