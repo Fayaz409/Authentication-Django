@@ -1,0 +1,18 @@
+{%extends 'authapp/base.html'%}
+{%block title%}
+staff list
+{%endblock%}
+{%block content%}
+<div class="text-center">
+    <h2>Staff List</h2>
+
+    <ul>
+        {%for staff_member in staff_members%}
+        <li>
+            {{staff_member.first_name}} -- {{staff_member.last_name}} -- {{staff_member.username}}
+        </li>
+        {%endfor%}
+    </ul>
+
+</div>
+{%endblock%}

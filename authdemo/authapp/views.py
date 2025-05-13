@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserChangeForm,AuthenticationForm,Password
 from django.contrib.auth import update_session_auth_hash,logout,login,authenticate
 # Create your views here.
 
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group,User
 from django.contrib.auth.decorators import login_required,user_passes_test
 from .forms import SignUpForm,ProfileChangeForm,RoleForm
 
@@ -123,3 +123,10 @@ def delete_role(request,role_id):
             return HttpResponse('This Role is Not Empty. So, It Can Not be Deleted')
 
     return render(request,'authapp/delete_role.html',{'role':role})
+
+@login_required
+@user_passes_test(is_superuser)
+def staff_list(request):
+    staff_members = User.objects.filter(is_staff=True)
+    return render(request,'authapp/staff_list.html',{'staff_members':staff_members})
+
